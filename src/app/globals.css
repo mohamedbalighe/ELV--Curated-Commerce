@@ -1,0 +1,68 @@
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+
+  /* Brand */
+  --background: #F5F1EB;
+  --foreground: #211D1B;
+  --card: #FDFCFB;
+  --surface: #FFFFFF;
+
+  /* Text */
+  --muted: #82776F;
+  --muted-dark: #806317;
+
+  /* Brand Accent */
+  --accent: #D4AF37;
+  --accent-hover: #806317;
+
+  /* Borders */
+  --border: #E4DCD3;
+
+  /* Buttons */
+  --button-bg: #211D1B;
+  --button-text: #FFFFFF;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --background: #0A0A0A;
+  --foreground: #EDEDED;
+  --card: #171717;
+  --surface: #202020;
+
+  --muted: #A39A90;
+  --muted-dark: #D4AF37;
+
+  --accent: #D4AF37;
+  --accent-hover: #E6C65A;
+
+  --border: #36302A;
+
+  --button-bg: #D4AF37;
+  --button-text: #211D1B;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-muted-dark: var(--muted-dark);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-border: var(--border);
+  --color-button-bg: var(--button-bg);
+  --color-button-text: var(--button-text);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}

@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { toast } from "react-toastify";
 
-interface ResetPasswordFormInputs {
+export interface ResetPasswordFormInputs {
   email: string;
   newPassword: string;
   confirmPassword: string;
@@ -27,10 +27,6 @@ export default function ResetPasswordPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const [isLoading, setIsLoading] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState("");
-  // const [successMessage, setSuccessMessage] = useState("");
 
   const {
     register,
@@ -43,32 +39,32 @@ export default function ResetPasswordPage() {
 
   const watchPassword = watch("newPassword");
 
-  async function onSubmit(data: ResetPasswordFormInputs){
-   await handleresetPassword_Fun(data)
-
-    setErrorMessage("");
-    setSuccessMessage("");
-    setIsLoading(true);
-  }
-  async function handleresetPassword_Fun(data:ResetPasswordFormInputs) {
-    console.log("user Email And rePassword inputs data :",data)
+  async function onSubmit(data: ResetPasswordFormInputs) {
     try{
-    // const data =await resetPassword({password , newPassworf})
-    console.log("reset Password data",data)
-    // if(){
-    //           toast.success("Password reset successfully! Redirecting to login...");
-    // router.push('/')
+    const result = await resetPassword({
+  email: data.email,
+  newPassword: data.newPassword,
+});
 
-    // }else{
-            // toast.error("Failed to reset password. Please try again.");
+      if (result.success) {
+        toast.success("Password reset successfully!");
 
-      // }
-
+        router.push("/Login");
+      } else {
+        toast.error(
+          result.message || "Failed to reset password. Please try again."
+        );
+      }
     } catch (error) {
-      console.log("reset Password error")
-      throw error
-    }
+      console.error("Reset password error:", error);
 
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
+      );
+    }
+  }
 
 
   return (
@@ -126,18 +122,7 @@ export default function ResetPasswordPage() {
                 </p>
               </div>
 
-              {/* Status Messages */}
-              {errorMessage && (
-                <div className="mb-6 rounded-sm border border-red-200 bg-red-50 p-3 text-sm text-red-600">
-                  {errorMessage}
-                </div>
-              )}
-
-              {successMessage && (
-                <div className="mb-6 rounded-sm border border-green-200 bg-green-50 p-3 text-sm text-green-700">
-                  {successMessage}
-                </div>
-              )}
+            
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 {/* Email Input */}
@@ -311,4 +296,3 @@ export default function ResetPasswordPage() {
     </main>
   );
   }
-}

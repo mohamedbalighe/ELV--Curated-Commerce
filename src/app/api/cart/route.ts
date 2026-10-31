@@ -1,23 +1,42 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req:NextRequest){
- const Token = await getToken({req:req})
- if(!Token) return NextResponse.json({message: 'unauthorized' , status :401})
-    
-    const response= await fetch(`https://ecommerce.routemisr.com/api/v2/cart` , {
-            headers :{
-                token : Token.token,
-                'Content-type':'application/json'
-            }
-        })
+export async function GET(req: NextRequest) {
+  const Token = await getToken({ req });
 
-        if(!response.ok) throw new Error('Unauthorized')
+  if (!Token) {
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
 
-        const payload = await response.json()
+  const accessToken = Token.token;
 
-        console.log("payload....",payload);
+  if (typeof accessToken !== "string") {
+    return NextResponse.json(
+      { message: "Invalid access token" },
+      { status: 401 }
+    );
+  }
 
-        return NextResponse.json(payload)
-
+  const response = await fetch(
+    "https://ecommerce.routemisr.com/api/v2/cart",
+    {
+      headers: {
+        token: accessToken,
+        "Content-Type": "application/json",
+      },
     }
+  );
+
+  const payload = await response.json();
+
+  if (!response.ok) {
+    return NextResponse.json(payload, {
+      status: response.status,
+    });
+  }
+
+  return NextResponse.json(payload);
+}

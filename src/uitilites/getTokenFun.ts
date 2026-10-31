@@ -1,17 +1,21 @@
-'use server'
-import { decode } from "next-auth/jwt"
-import { cookies } from "next/headers"
+"use server";
 
-export async function getTokenFun(){
-  const cookie= await cookies()
-  const nextAuthToken = cookie.get('next-auth.session-token')?.value
- const accessToken = await decode({
-  secret : process.env.NEXTAUTH_SECRET! ,
-  token: nextAuthToken
-})
-console.log('SECRET.............', process.env.NEXTAUTH_SECRET)
+import { decode } from "next-auth/jwt";
+import { cookies } from "next/headers";
 
-console.log(accessToken); // ← شوف في Terminal ماذا يحتوي
-return accessToken?.token
+export async function getTokenFun(): Promise<string | null> {
+  const cookie = await cookies();
 
+  const nextAuthToken = cookie.get("next-auth.session-token")?.value;
+
+  if (!nextAuthToken) return null;
+
+  const accessToken = await decode({
+    secret: process.env.NEXTAUTH_SECRET!,
+    token: nextAuthToken,
+  });
+
+  return typeof accessToken?.token === "string"
+    ? accessToken.token
+    : null;
 }

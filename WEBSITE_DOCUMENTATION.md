@@ -1,4 +1,4 @@
-# 🛒 VANTA — E-Commerce Website Documentation
+# 🛒ELEVE— E-Commerce Website Documentation
 
 > **Full-stack e-commerce application built with Next.js 16, TypeScript, Tailwind CSS v4, NextAuth.js, and TanStack Query.**
 

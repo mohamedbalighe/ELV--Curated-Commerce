@@ -26,34 +26,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
        className={`${ExoFont.variable} h-full antialiased`}
     >
-      <head>       {/* 
-  =========================================================
-  Meta Pixel Integration
-  =========================================================
-
-  Purpose:
-  Integrate Meta Pixel to track website visits (PageView).
-
-  How it works:
-  1. Next.js Script component loads the Pixel code.
-  2. afterInteractive ensures the script runs after the page
-     becomes interactive.
-  3. fbq('init', PIXEL_ID) initializes Meta Pixel.
-  4. fbq('track', 'PageView') sends a PageView event when
-     the script runs.
-
-  Important:
-  This implementation tracks the initial page load only.
-  It does not automatically track client-side route changes
-  in Next.js App Router.
-
-  Testing:
-  Use Meta Pixel Helper or Meta Events Manager > Test Events
-  to verify that PageView events are received.
-
-  =========================================================
-*/}
-  <Script
+      <body className="min-h-full flex flex-col">
+        <Script
     id="meta-pixel"
     strategy="afterInteractive"
     dangerouslySetInnerHTML={{
@@ -71,27 +45,32 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       `,
     }}
   />
-</head>
 
-      <body className="min-h-full flex flex-col">
-        {/* 
-  Meta Pixel Fallback (No JavaScript)
-
-  Sends a PageView event using an image request when the
-  visitor's browser has JavaScript disabled.
-
-  This is a fallback mechanism and does not replace the
-  main Meta Pixel script.
-*/}
-        <noscript> 
-  <img
-    height="1"
-    width="1"
-    style={{ display: "none" }}
-    src="https://www.facebook.com/tr?id=1391786012762247&ev=PageView&noscript=1"
-    alt=""
+   {/* Microsoft Clarity */}
+  <Script
+    id="microsoft-clarity"
+    strategy="afterInteractive"
+    dangerouslySetInnerHTML={{
+      __html: `
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "z8znjf2j6e");
+      `,
+    }}
   />
-</noscript>
+
+  <noscript>
+    <img
+      height="1"
+      width="1"
+      style={{ display: "none" }}
+      src="https://www.facebook.com/tr?id=1391786012762247&ev=PageView&noscript=1"
+      alt=""
+    />
+  </noscript>
+
         <Providers>
         <MyProvider>
                 <Navbar/>

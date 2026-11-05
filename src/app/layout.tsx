@@ -6,6 +6,7 @@ import Footer from "./_components/Footer/Footer";
 import { ToastContainer } from "react-toastify";
 import MyProvider from "./_components/MyProvider/MyProvider";
 import Providers from "./_components/TanstackProvider/TanstackProvider";
+import Script from "next/script";
 
 const ExoFont = Archivo({
   weight: ["400", "600", "800"],
@@ -25,7 +26,72 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
        className={`${ExoFont.variable} h-full antialiased`}
     >
+      <head>       {/* 
+  =========================================================
+  Meta Pixel Integration
+  =========================================================
+
+  Purpose:
+  Integrate Meta Pixel to track website visits (PageView).
+
+  How it works:
+  1. Next.js Script component loads the Pixel code.
+  2. afterInteractive ensures the script runs after the page
+     becomes interactive.
+  3. fbq('init', PIXEL_ID) initializes Meta Pixel.
+  4. fbq('track', 'PageView') sends a PageView event when
+     the script runs.
+
+  Important:
+  This implementation tracks the initial page load only.
+  It does not automatically track client-side route changes
+  in Next.js App Router.
+
+  Testing:
+  Use Meta Pixel Helper or Meta Events Manager > Test Events
+  to verify that PageView events are received.
+
+  =========================================================
+*/}
+  <Script
+    id="meta-pixel"
+    strategy="afterInteractive"
+    dangerouslySetInnerHTML={{
+      __html: `
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1391786012762247');
+        fbq('track', 'PageView');
+      `,
+    }}
+  />
+</head>
+
       <body className="min-h-full flex flex-col">
+        {/* 
+  Meta Pixel Fallback (No JavaScript)
+
+  Sends a PageView event using an image request when the
+  visitor's browser has JavaScript disabled.
+
+  This is a fallback mechanism and does not replace the
+  main Meta Pixel script.
+*/}
+        <noscript> 
+  <img
+    height="1"
+    width="1"
+    style={{ display: "none" }}
+    src="https://www.facebook.com/tr?id=1391786012762247&ev=PageView&noscript=1"
+    alt=""
+  />
+</noscript>
         <Providers>
         <MyProvider>
                 <Navbar/>

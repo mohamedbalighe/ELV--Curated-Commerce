@@ -15,7 +15,7 @@ import { UserData } from "../services/Types/productType";
     
 
     const payload= await response.json()
-        console.log(payload);
+        console.log("signup >>>>>>>>>>>",payload);
 
    return response.ok 
     

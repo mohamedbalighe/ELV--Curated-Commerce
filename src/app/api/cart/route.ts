@@ -6,11 +6,11 @@ export async function GET(req: NextRequest) {
 
   if (!Token) {
     return NextResponse.json(
-      { message: "Unauthorized" },
-      { status: 401 }
-    );
+  { step: "DEBUG_ROUTE_V2" },
+  { status: 401 }
+);
   }
-
+// Unauthorized
   const accessToken = Token.token;
 
   if (typeof accessToken !== "string") {

@@ -75,8 +75,8 @@ export default function CartComponent() {
     return (
       <section className="flex min-h-[70vh] items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
-          <BeatLoader size={8} color="#D4AF37" />
-          <p className="text-[10px] font-medium uppercase tracking-[0.24em] text-foreground">
+          <BeatLoader size={9} color="#D4AF37" />
+          <p className="text-[13px] font-medium uppercase tracking-[0.24em] text-foreground">
             Preparing your selection
           </p>
         </div>

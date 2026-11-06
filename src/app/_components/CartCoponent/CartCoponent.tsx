@@ -84,38 +84,38 @@ export default function CartComponent() {
     );
   }
 
-  if (error) {
-    return (
-      <section className="flex min-h-[70vh] items-center justify-center bg-background px-5 py-16 text-foreground">
-        <div className="w-full max-w-md border-y border-border py-12 text-center">
-          <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center border border-border text-accent ">
-            <AlertCircle size={24} strokeWidth={1.4} />
-          </div>
+  // if (error) {
+  //   return (
+  //     <section className="flex min-h-[70vh] items-center justify-center bg-background px-5 py-16 text-foreground">
+  //       <div className="w-full max-w-md border-y border-border py-12 text-center">
+  //         <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center border border-border text-accent ">
+  //           <AlertCircle size={24} strokeWidth={1.4} />
+  //         </div>
 
-          <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-accent ">
-            Cart unavailable
-          </p>
+  //         <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-accent ">
+  //           Cart unavailable
+  //         </p>
 
-          <h2 className="font-serif text-2xl font-normal">
-            We couldn’t load your cart.
-          </h2>
+  //         <h2 className="font-serif text-2xl font-normal">
+  //           We couldn’t load your cart.
+  //         </h2>
 
-          <p className="mx-auto mt-3 max-w-sm text-sm leading-7 text-foreground">
-            Please try again. Your cart items may still be available.
-          </p>
+  //         <p className="mx-auto mt-3 max-w-sm text-sm leading-7 text-foreground">
+  //           Please try again. Your cart items may still be available.
+  //         </p>
 
-          <button
-            type="button"
-            onClick={() => window.location.reload()}
-            className="mt-7 inline-flex min-h-12 items-center justify-center gap-3 bg-background px-6 text-[10px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#D4AF37]"
-          >
-            <RotateCcw size={15} />
-            Try again
-          </button>
-        </div>
-      </section>
-    );
-  }
+  //         <button
+  //           type="button"
+  //           onClick={() => window.location.reload()}
+  //           className="mt-7 inline-flex min-h-12 items-center justify-center gap-3 bg-background px-6 text-[10px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#D4AF37]"
+  //         >
+  //           <RotateCcw size={15} />
+  //           Try again
+  //         </button>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   const products = data?.data?.products ?? [];
   const totalPrice = data?.data?.totalCartPrice ?? 0;

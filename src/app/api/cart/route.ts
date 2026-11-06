@@ -2,20 +2,24 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const Token = await getToken({ req });
+  const Token = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+
+  console.log("Session token exists:", !!Token);
+  console.log("API access token exists:", typeof Token?.token === "string");
 
   if (!Token) {
     return NextResponse.json(
-  { step: "DEBUG_ROUTE_V2" },
-  { status: 401 }
-);
+      { step: "NEXTAUTH_TOKEN_NOT_FOUND" },
+      { status: 401 }
+    );
   }
-// Unauthorized
-  const accessToken = Token.token;
 
-  if (typeof accessToken !== "string") {
+  if (typeof Token.token !== "string") {
     return NextResponse.json(
-      { message: "Invalid access token" },
+      { step: "API_ACCESS_TOKEN_NOT_FOUND" },
       { status: 401 }
     );
   }
@@ -24,7 +28,7 @@ export async function GET(req: NextRequest) {
     "https://ecommerce.routemisr.com/api/v2/cart",
     {
       headers: {
-        token: accessToken,
+        token: Token.token,
         "Content-Type": "application/json",
       },
     }
@@ -32,11 +36,7 @@ export async function GET(req: NextRequest) {
 
   const payload = await response.json();
 
-  if (!response.ok) {
-    return NextResponse.json(payload, {
-      status: response.status,
-    });
-  }
-
-  return NextResponse.json(payload);
+  return NextResponse.json(payload, {
+    status: response.status,
+  });
 }

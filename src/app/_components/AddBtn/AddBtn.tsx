@@ -16,14 +16,14 @@ const query= useQueryClient()
           query.invalidateQueries({queryKey:['getcart']})
 
     } else {
-      toast.error(data?.message || 'Failed to add product to cart');
+      toast.error('Failed to add product to cart');
     }
   } catch (error: any) {
     // Check if the error is due to missing authentication
     if (error?.message === 'Unauthorized') {
       toast.error('Please log in first to add items to your cart');
     } else {
-      toast.error(error?.message || 'Something went wrong. Please try again.');
+      toast.error('Something went wrong. Please try again.');
     }
   }
 }

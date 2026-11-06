@@ -248,7 +248,7 @@ export default function Navbar() {
                 </>
               )}
 
-              {status !== "authenticated" && (
+              {status === "unauthenticated" && (
                 <Link
                   href="/login"
                   className={`flex items-center gap-1.5 whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.12em] transition-colors hover:text-accent  ${focusRing}`}

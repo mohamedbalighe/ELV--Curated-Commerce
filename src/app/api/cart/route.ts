@@ -3,9 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const Token = await getToken({
-    req,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+  req,
+  secret: process.env.NEXTAUTH_SECRET,
+  cookieName: "next-auth.session-token",
+});
 
   console.log("Session token exists:", !!Token);
   console.log("API access token exists:", typeof Token?.token === "string");

@@ -5,7 +5,7 @@ export async function GET(req: NextRequest) {
   const Token = await getToken({
   req,
   secret: process.env.NEXTAUTH_SECRET,
-  cookieName: "next-auth.session-token",
+  cookieName: "__Secure-next-auth.session-token",
 });
 
   console.log("Session token exists:", !!Token);
